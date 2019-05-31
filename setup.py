@@ -20,6 +20,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     test_suite="",
-    install_requires=[],
+    install_requires=["pyramid_services"],
     entry_points="",
 )
