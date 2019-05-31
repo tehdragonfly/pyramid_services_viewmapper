@@ -1,2 +1,3 @@
 *.pyc
 .idea
+pyramid_services_viewmapper.egg-info/
