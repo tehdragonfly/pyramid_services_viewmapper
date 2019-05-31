@@ -34,6 +34,13 @@ class ServiceViewMapper:
         def users(request, db: ServiceInjector(name="db")):
             users = db.query(User)
             return {"users": users}
+
+    The ServiceInjector class can be used as a shortcut for this:
+
+        @view_config(route_name="users", renderer="json")
+        def users(request, db: ServiceInjector):
+            users = db.query(User)
+            return {"users": users}
     """
 
     def __init__(self, **kw):
@@ -53,7 +60,9 @@ class ServiceViewMapper:
         for parameter, annotation in annotations.items():
             if parameter in ("request", "context", "return"):
                 continue
-            if isinstance(annotation, ServiceInjector):
+            if annotation == ServiceInjector:
+                services.append((parameter, ServiceInjector(name=parameter)))
+            elif isinstance(annotation, ServiceInjector):
                 services.append((parameter, annotation))
             else:
                 services.append((parameter, ServiceInjector(annotation)))

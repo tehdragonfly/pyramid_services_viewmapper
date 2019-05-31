@@ -4,7 +4,7 @@ from pyramid.config import Configurator
 from wsgiref.simple_server import make_server
 from zope.interface import Interface, implementer
 
-from pyramid_services_viewmapper import ServiceInjector, ServiceViewMapper
+from pyramid_services_viewmapper import ServiceInjector as SI, ServiceViewMapper
 
 
 class IExampleService(Interface):
@@ -36,7 +36,11 @@ class NamedService:
         return "named"
 
 
-def named_view(request, named_service: ServiceInjector("named_service")):
+def named_view(request, named_service: SI(name="named_service")):
+    return {"function": named_service.named()}
+
+
+def implicit_named_view(request, named_service: SI):
     return {"function": named_service.named()}
 
 
@@ -57,6 +61,9 @@ if __name__ == '__main__':
 
     config.add_route("named", "/named")
     config.add_view(named_view, route_name="named", renderer="json")
+
+    config.add_route("implicit_named", "/implicit_named")
+    config.add_view(implicit_named_view, route_name="implicit_named", renderer="json")
 
     server = make_server('0.0.0.0', 8080, config.make_wsgi_app())
     server.serve_forever()
