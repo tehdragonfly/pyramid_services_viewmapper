@@ -81,7 +81,7 @@ setup(
     author_email=EMAIL,
     python_requires=REQUIRES_PYTHON,
     url=URL,
-    py_modules=["pyramid_services_viewmapper"],
+    packages=["pyramid_services_viewmapper"],
     install_requires=INSTALL_REQUIRES,
     tests_require=TESTS_REQUIRE,
     extras_require=EXTRAS,
