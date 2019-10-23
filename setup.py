@@ -15,7 +15,7 @@ URL = "https://github.com/tehdragonfly/pyramid_services_viewmapper"
 EMAIL = "mysticdragonfly@hotmail.co.uk"
 AUTHOR = "Olly Parton"
 REQUIRES_PYTHON = ">=3.7.0"
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 INSTALL_REQUIRES = ["pyramid_services"]
 
