@@ -49,23 +49,22 @@ class ServiceViewMapper:
     def __call__(self, view):
         parameters = signature(view).parameters
 
-        view_callable = view.__init__ if isclass(view) else view
-        annotations = {
-            name: eval(annotation, view_callable.__globals__)
-            for (name, annotation)
-            in view_callable.__annotations__.items()
-        }
-
         services = []
-        for parameter, annotation in annotations.items():
-            if parameter in ("request", "context", "return"):
+
+        view_callable = view.__init__ if isclass(view) else view
+
+        for name, annotation_str in view_callable.__annotations__.items():
+            if name in ("request", "context", "return"):
                 continue
+
+            annotation = eval(annotation_str, view_callable.__globals__)
+
             if annotation == ServiceInjector:
-                services.append((parameter, ServiceInjector(name=parameter)))
+                services.append((name, ServiceInjector(name=name)))
             elif isinstance(annotation, ServiceInjector):
-                services.append((parameter, annotation))
+                services.append((name, annotation))
             else:
-                services.append((parameter, ServiceInjector(annotation)))
+                services.append((name, ServiceInjector(annotation)))
 
         def wrapped_view(context, request):
             kwargs = {
