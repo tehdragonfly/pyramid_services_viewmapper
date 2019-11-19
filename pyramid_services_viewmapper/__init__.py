@@ -80,3 +80,6 @@ class ServiceViewMapper:
             return view(**kwargs)
 
         return wrapped_view
+
+def includeme(config):
+    config.set_view_mapper(ServiceViewMapper)

@@ -51,7 +51,7 @@ if __name__ == '__main__':
     config.register_service(ExampleService(), IExampleService)
     config.register_service(NamedService(), name="named_service")
 
-    config.set_view_mapper(ServiceViewMapper)
+    config.include("pyramid_services_viewmapper")
 
     config.add_route("function", "/function")
     config.add_view(function_view, route_name="function", renderer="json")
