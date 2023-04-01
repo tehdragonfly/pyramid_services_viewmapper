@@ -53,6 +53,9 @@ class ServiceViewMapper:
 
         view_callable = view.__init__ if isclass(view) else view
 
+        if not hasattr(view_callable, "__annotations__"):
+            return view_callable
+
         for name, annotation_str in view_callable.__annotations__.items():
             if name in ("request", "context", "return"):
                 continue
