@@ -56,11 +56,12 @@ class ServiceViewMapper:
         if not hasattr(view_callable, "__annotations__"):
             return view_callable
 
-        for name, annotation_str in view_callable.__annotations__.items():
+        for name, annotation in view_callable.__annotations__.items():
             if name in ("request", "context", "return"):
                 continue
 
-            annotation = eval(annotation_str, view_callable.__globals__)
+            if isinstance(annotation, str):
+                annotation = eval(annotation, view_callable.__globals__)
 
             if annotation == ServiceInjector:
                 services.append((name, ServiceInjector(name=name)))
