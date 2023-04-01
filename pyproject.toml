@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "pyramid-services-viewmapper"
+version = "1.0.2"
+description = "View mapper for use with pyramid_services."
+authors = ["Olly Parton <mysticdragonfly@hotmail.co.uk>"]
+readme = "README.md"
+packages = [{include = "pyramid_services_viewmapper"}]
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+pyramid-services = ">=2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
